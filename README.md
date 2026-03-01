@@ -1,7 +1,7 @@
 # Sort Algorithm Visualizer 
 
 Acesta este un proiect de tip **Visualizer pentru algoritmi de sortare**, dezvoltat folosind **React.js** în perioada liceului.  
-Proiectul permite vizualizarea pas cu pas a diferiților algoritmi de sortare (Bubble Sort, Quick Sort, Selection Sort ) pe un set de date generat aleatoriu.  
+Proiectul permite vizualizarea pas cu pas a diferiților algoritmi de sortare (Bubble Sort, Quick Sort, Selection Sort) pe un set de date generat aleatoriu.  
 Scopul proiectului a fost să înțeleag mai bine logica algoritmilor și să demonstrez funcționarea lor vizual.
 
 ---
@@ -29,3 +29,5 @@ Scopul proiectului a fost să înțeleag mai bine logica algoritmilor și să de
 - Organizarea codului în componente reutilizabile  
 
 ---
+## Demo Video
+https://youtu.be/Ah_sng4s5lM
