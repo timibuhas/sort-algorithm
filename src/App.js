@@ -1,19 +1,18 @@
 import "./App.css";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 function App() {
 
   const [hi, setHi] = useState([]);
-  const [size, setSize] = useState(0)
-
+  const [size, setSize] = useState(0);
+  const [delay, setDelay] = useState(200); // Delay default 200ms
+  const isSorting = useRef(false); // Flag pentru oprire sortare
 
   useEffect(() => {
     generateEvent()
-    console.log("s-a schimbat sizeu")
   }, [size])
 
   function generateEvent() {
-
     var numbers = [];
     while (numbers.length < size) {
       var ren = Math.floor(Math.random() * size) + 1;
@@ -21,111 +20,116 @@ function App() {
       if (!numbers.some((num) => num.height === x.height)) numbers.push(x);
     }
     setHi(numbers);
-
   }
 
-  function sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   async function QuickSort() {
+    isSorting.current = true;
+    let vector = [...hi];
 
-    var vector = hi
-    for (var i = 0; i < size - 1; i++) {
-      for (var j = i + 1; j < size; j++) {
+    for (let i = 0; i < size - 1; i++) {
+      if (!isSorting.current) break; // verifică flag-ul Stop
+      for (let j = i + 1; j < size; j++) {
+        if (!isSorting.current) break;
 
-        vector[i].color = vector[j].color = '#B80F0A'
-        setHi([...vector])
-        await sleep(500 - size)
+        vector[i].color = vector[j].color = '#B80F0A';
+        setHi([...vector]);
+        await sleep(delay);
 
         if (vector[i].height > vector[j].height) {
+          vector[i].color = vector[j].color = '#71c7ec';
+          setHi([...vector]);
+          await sleep(delay);
 
-          vector[i].color = vector[j].color = '#71c7ec'
-          setHi([...vector])
-          await sleep(500 - size)
-
-          var a = vector[i];
-          vector[i] = vector[j];
-          vector[j] = a;
+          [vector[i], vector[j]] = [vector[j], vector[i]];
         }
 
-        vector[i].color = vector[j].color = 'black'
+        vector[i].color = vector[j].color = 'black';
+        setHi([...vector]);
       }
-
     }
-    setHi([...vector])
 
+    isSorting.current = false;
+    setHi([...vector]);
   }
-  async function bubbleSort() {
-    var vector = hi
-    for (var i = 0; i < size - 1; i++) {
-      for (var j = 0; j < size - i - 1; j++) {
 
-        vector[j].color = vector[j + 1].color = '#B80F0A'
-        setHi([...vector])
-        await sleep((size * 10) / size)
+  async function bubbleSort() {
+    isSorting.current = true;
+    let vector = [...hi];
+
+    for (let i = 0; i < size - 1; i++) {
+      if (!isSorting.current) break;
+      for (let j = 0; j < size - i - 1; j++) {
+        if (!isSorting.current) break;
+
+        vector[j].color = vector[j + 1].color = '#B80F0A';
+        setHi([...vector]);
+        await sleep(delay);
 
         if (vector[j].height > vector[j + 1].height) {
+          vector[j].color = vector[j + 1].color = '#71c7ec';
+          setHi([...vector]);
+          await sleep(delay);
 
-          vector[j].color = vector[j + 1].color = '#71c7ec'
-          setHi([...vector])
-          await sleep((size * 2) / size)
-
-          var a = vector[j];
-          vector[j] = vector[j + 1];
-          vector[j + 1] = a;
-
+          [vector[j], vector[j + 1]] = [vector[j + 1], vector[j]];
         }
-        vector[j].color = vector[j + 1].color = 'black'
+
+        vector[j].color = vector[j + 1].color = 'black';
+        setHi([...vector]);
       }
-
-
     }
-    setHi([...vector])
+
+    isSorting.current = false;
+    setHi([...vector]);
   }
 
   async function selectionSort() {
-    var i, j, min_idx;
-    var vector = hi
-    for (i = 0; i < size - 1; i++) {
-      // Find the minimum element in unsorted array
-      min_idx = i;
+    isSorting.current = true;
+    let vector = [...hi];
 
-      for (j = i + 1; j < size; j++) {
+    for (let i = 0; i < size - 1; i++) {
+      if (!isSorting.current) break;
+      let min_idx = i;
 
-        vector[min_idx].color = vector[j].color = '#B80F0A'
-        setHi([...vector])
-        await sleep(1)
-        vector[min_idx].color = vector[j].color = 'black'
+      for (let j = i + 1; j < size; j++) {
+        if (!isSorting.current) break;
+
+        vector[min_idx].color = vector[j].color = '#B80F0A';
+        setHi([...vector]);
+        await sleep(delay);
+        vector[min_idx].color = vector[j].color = 'black';
 
         if (vector[j].height < vector[min_idx].height) {
           min_idx = j;
         }
       }
 
-      vector[i].color = vector[min_idx].color = 'green'
-      setHi([...vector])
-      await sleep(1)
-      vector[i].color = vector[min_idx].color = 'black'
+      vector[i].color = vector[min_idx].color = '#71c7ec';
+      setHi([...vector]);
+      await sleep(delay);
 
-      var a = vector[min_idx];
-      vector[min_idx] = vector[i];
-      vector[i] = a;
-
-
+      [vector[i], vector[min_idx]] = [vector[min_idx], vector[i]];
+      vector[i].color = vector[min_idx].color = 'black';
+      setHi([...vector]);
     }
-    setHi([...vector])
+
+    isSorting.current = false;
+    setHi([...vector]);
+  }
+
+  function stopSorting() {
+    isSorting.current = false; // Oprește sortarea
   }
 
   return (
     <div className="content">
-
       <div className="some">
-        {
-          hi.map((item, index) => (
-            <div key={index} style={{ background: item.color, height: (item.height * 5), width: '2rem', marginLeft: 5 }}></div>
-          ))
-        }
+        {hi.map((item, index) => (
+          <div key={index} style={{ background: item.color, height: item.height * 5, width: '2rem', marginLeft: 5 }}></div>
+        ))}
       </div>
 
       <div className="menu">
@@ -134,11 +138,31 @@ function App() {
           <button onClick={() => bubbleSort()} >BubbleSort</button>
           <button onClick={() => selectionSort()} >SelectionSort</button>
         </div>
-        <input type="text" value={size} onChange={(e) => setSize(e.target.value)}></input>
-        <button onClick={() => generateEvent(size)} >Generate</button>
-        <button onClick={() => setHi([])} >Stop</button>
+        <div className="contentMenu">
+        
+        <p>Dimensiune</p>
+        <div>
+          <input
+            type="number"
+            value={size}
+            onChange={(e) => setSize(Number(e.target.value))}
+            placeholder="Array size"
+          />
+          
+        </div>
+        <p>Viteza (ms)</p>
+        <div >
+          <input
+            type="number"
+            value={delay}
+            onChange={(e) => setDelay(Number(e.target.value))}
+            placeholder="Delay (ms)"
+          />
+        </div>
+        <button onClick={() => generateEvent()} >Generate</button>
+        <button onClick={stopSorting} style={{ marginTop: 10 }}>Stop</button>
+        </div>
       </div>
-
     </div>
   );
 }
