@@ -25,8 +25,6 @@ Scopul proiectului a fost să înțeleag mai bine logica algoritmilor și să de
 - Crearea unei aplicații web interactive folosind React  
 - Manipularea stării componentelor și React Hooks (`useState`, `useEffect`)  
 - Implementarea logicii algoritmilor de sortare în JavaScript  
-- Crearea animațiilor pentru vizualizarea pașilor algoritmilor  
-- Organizarea codului în componente reutilizabile  
 
 ---
 ## Demo Video
