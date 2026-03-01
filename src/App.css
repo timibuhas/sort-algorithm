@@ -1,0 +1,61 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  width:100%;
+  margin-top:100px;
+}
+
+.content .some {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 500px;
+  width:100%;
+  padding:20px;
+}
+
+.content .menu{
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction: row;
+  align-items: center;
+  align-content:center;
+  align-items: center;
+  border-radius:10px;
+  padding:20px;
+background:#404040;
+}
+
+.content .menu button{
+  outline:none;
+  border:none;
+  background:pink;
+  border-radius:10px;
+  font-size:20px;
+  margin: 10px;
+  padding:5px;
+}
+
+.content .menu .sortmenu
+{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.content .menu .sortmenu button{
+  outline:none;
+  border:none;
+  background:orange;
+  border-radius:10px;
+  font-size:20px;
+  margin: 10px;
+  padding:5px;
+}
